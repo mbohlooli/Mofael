@@ -1,1 +1,3 @@
 node_modules
+web/logfile.log
+web/uncaughtExceptions.log
