@@ -12,5 +12,6 @@ A system for intelligent schools.
 git clone https://github.com/mbohlooli/Mofael.git
 npm install
 cd web
+set key=[your jwt secret key]
 node index.js
 ```
