@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const _ = require("lodash");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -28,6 +31,14 @@ const userSchema = new mongoose.Schema({
   }
   // TODO: add roles (مدیر، مدیر آموزش، ادمین، دانش آموز، معلم، ...)
 });
+
+userSchema.methods.generateAuthToken = function() {
+  return jwt.sign(
+    _.pick(this, ["_id", "username", "firstName", "lastName"]),
+    config.get("jwtPrivateKey"),
+    { expiresIn: "1h" }
+  );
+};
 
 const User = mongoose.model("Users", userSchema);
 
