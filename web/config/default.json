@@ -1,3 +1,4 @@
 {
-  "db": "mongodb://localhost/mofael_db"
+  "db": "mongodb://localhost/mofael_db",
+  "jwtPrivateKey": ""
 }
