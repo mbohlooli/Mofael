@@ -29,8 +29,13 @@ const userSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 35,
     required: true
+  },
+  role: {
+    type: String,
+    minlength: 3,
+    maxlength: 15,
+    required: true
   }
-  // TODO: add roles (مدیر، مدیر آموزش، ادمین، دانش آموز، معلم، ...)
 });
 
 userSchema.methods.generateAuthToken = function() {
