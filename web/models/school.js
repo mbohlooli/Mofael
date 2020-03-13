@@ -36,8 +36,7 @@ function validateSchool(school) {
       .min(3)
       .max(30)
       .required(),
-    zone: Joi.number().required(),
-    managerId: Joi.objectId().required()
+    zone: Joi.number().required()
   };
 
   return Joi.validate(school, schema);
