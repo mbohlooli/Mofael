@@ -3,6 +3,7 @@ const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const Joi = require("joi");
+const { roleSchema } = require("./role");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -30,10 +31,8 @@ const userSchema = new mongoose.Schema({
     maxlength: 35,
     required: true
   },
-  role: {
-    type: String,
-    minlength: 3,
-    maxlength: 15,
+  roles: {
+    type: [roleSchema],
     required: true
   }
 });
