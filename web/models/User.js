@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const Joi = require("joi");
 const { roleSchema } = require("./role");
-
+//TODO: add image for the user
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
