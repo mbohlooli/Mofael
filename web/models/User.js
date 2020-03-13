@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema({
     maxlength: 35,
     required: true
   }
+  // TODO: add roles (مدیر، مدیر آموزش، ادمین، دانش آموز، معلم، ...)
 });
 
-const user = mongoose.Model("Users", userSchema);
+const User = mongoose.model("Users", userSchema);
+
+module.exports = { User };
