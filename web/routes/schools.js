@@ -3,16 +3,17 @@ const _ = require("lodash");
 const { School, validateSchool } = require("../models/school");
 const { validate } = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
+const manager = require("../middleware/manager");
 
 const router = express.Router();
 
-router.get("/", auth, async (req, res) => {
+router.get("/", [auth, manager], async (req, res) => {
   const manager = req.user;
 
   res.send(await School.find({ managerId: manager._id }));
 });
 
-router.post("/", auth, async (req, res) => {
+router.post("/", [auth, manager], async (req, res) => {
   validate(validateSchool, req, res);
 
   let school = await School.findOne({ name: req.body.name });
@@ -29,7 +30,7 @@ router.post("/", auth, async (req, res) => {
   res.send(JSON.stringify(school));
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", [auth, manager], async (req, res) => {
   validate(validateSchool, req, res);
 
   const school = await School.findById(req.params.id);
@@ -45,7 +46,7 @@ router.put("/:id", auth, async (req, res) => {
   res.send(await School.findById(req.params.id));
 });
 
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", [auth, manager], async (req, res) => {
   const school = await School.findById(req.params.id);
   if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
 
