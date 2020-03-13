@@ -1,12 +1,13 @@
 const express = require("express");
-const { User } = require("../models/user");
+const { User, validateUser } = require("../models/user");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
+const { validate } = require("../utils/validateRequest");
 
 const router = express.Router();
 
 router.post("/register", async (req, res) => {
-  // TODO: add validation for the request body with Joi
+  validate(validateUser, req, res);
 
   let user = await User.findOne({ username: req.body.username });
   if (user) return res.status(400).send("کاربر در حال حاضر وجود دارد.");
