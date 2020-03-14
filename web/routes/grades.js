@@ -32,7 +32,13 @@ router.post("/", [auth, manager], async (req, res) => {
   if (school.managerId != manager._id)
     return res.status(403).send("شما اجزاه ویرایش این مدرسه را ندارید.");
 
-  const grade = new Grade(_.pick(req.body, ["name", "schoolId"]));
+  let grade = await Grade.findOne({
+    schoolId: school._id,
+    name: req.body.name
+  });
+  if (grade) return res.status(400).send("این پایه قبلا ثبت شده.");
+
+  grade = new Grade(_.pick(req.body, ["name", "schoolId"]));
   await grade.save();
 
   res.send(grade);
