@@ -1,7 +1,6 @@
 module.exports = function(req, res, next) {
   const user = req.user;
-
-  for (let role in user.roles) {
+  for (let role of user.roles) {
     if (role.degree <= 2) {
       next();
       return;
