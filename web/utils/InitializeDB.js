@@ -1,6 +1,6 @@
 const { Role } = require("../models/role");
 
-module.exports.initDB = async function() {
+module.exports = async function() {
   const roles = await Role.find();
   if (roles.length == 6) return;
 

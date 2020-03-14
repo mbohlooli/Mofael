@@ -2,7 +2,7 @@ const express = require("express");
 const _ = require("lodash");
 const { School, validateSchool } = require("../models/school");
 const { Grade } = require("../models/grade");
-const { validate } = require("../utils/validateRequest");
+const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const manager = require("../middleware/manager");
 
@@ -40,7 +40,7 @@ router.put("/:id", [auth, manager], async (req, res) => {
   const manager = req.user;
 
   if (school.managerId != manager._id)
-    return res.status(401).send("شما اجازه ویرایش این مدرسه را ندارید.");
+    return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");
 
   await school.update(_.pick(req.body, ["name", "city", "zone"]));
 
@@ -54,7 +54,7 @@ router.delete("/:id", [auth, manager], async (req, res) => {
   const manager = req.user;
 
   if (school.managerId != manager._id)
-    return res.status(401).send("شما اجازه حذف این مدرسه را ندارید.");
+    return res.status(403).send("شما اجازه حذف این مدرسه را ندارید.");
 
   await Grade.deleteMany({ schoolId: school._id });
 

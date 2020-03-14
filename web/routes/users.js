@@ -3,7 +3,7 @@ const { User, validateUser } = require("../models/user");
 const { Role } = require("../models/role");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
-const { validate } = require("../utils/validateRequest");
+const validate = require("../utils/validateRequest");
 
 const router = express.Router();
 

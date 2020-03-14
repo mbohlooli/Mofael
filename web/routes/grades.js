@@ -2,7 +2,7 @@ const express = require("express");
 const _ = require("lodash");
 const { Grade, validateGrade } = require("../models/grade");
 const { School } = require("../models/school");
-const { validate } = require("../utils/validateRequest");
+const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const manager = require("../middleware/manager");
 

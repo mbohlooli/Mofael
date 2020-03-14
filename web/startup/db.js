@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const config = require("config");
 const winston = require("winston");
-const { initDB } = require("../utils/InitializeDB");
+const initDB = require("../utils/InitializeDB");
 
 module.exports = function() {
   const db = config.get("db");

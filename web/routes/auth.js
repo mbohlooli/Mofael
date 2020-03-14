@@ -2,7 +2,7 @@ const express = require("express");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const { User } = require("../models/user");
-const { validate } = require("../utils/validateRequest");
+const validate = require("../utils/validateRequest");
 
 const router = express.Router();
 
