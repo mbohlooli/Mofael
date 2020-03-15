@@ -9,7 +9,6 @@ const manager = require("../middleware/manager");
 
 const router = express.Router();
 router.get("/:gradeId", [auth, manager], async (req, res) => {
-  console.log("hi");
   const grade = await Grade.findById(req.params.gradeId);
   if (!grade) return res.status(404).send("پایه مورد نظر یافت نشد.");
 
