@@ -52,7 +52,6 @@ router.put("/:id", [auth, manager], async (req, res) => {
 
   let grade = classroom.grade;
   if (req.body.gradeId) {
-    console.log("hi");
     grade = await Grade.findById(req.body.gradeId);
     if (!grade) return res.status(404).send("پایه مورد نظر یافت نشد.");
 
