@@ -34,12 +34,22 @@ const userSchema = new mongoose.Schema({
   roles: {
     type: [roleSchema],
     required: true
+  },
+  schoolId: {
+    type: mongoose.Types.ObjectId
   }
 });
 
 userSchema.methods.generateAuthToken = function() {
   return jwt.sign(
-    _.pick(this, ["_id", "username", "firstName", "lastName", "roles"]),
+    _.pick(this, [
+      "_id",
+      "username",
+      "firstName",
+      "lastName",
+      "roles",
+      "schoolId"
+    ]),
     config.get("jwtPrivateKey"),
     { expiresIn: "1h" }
   );
@@ -64,7 +74,8 @@ function validateUser(user) {
     lastName: Joi.string()
       .min(3)
       .max(35)
-      .required()
+      .required(),
+    schoolId: Joi.objectId()
   };
 
   return Joi.validate(user, schema);
