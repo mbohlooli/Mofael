@@ -2,6 +2,7 @@ const express = require("express");
 const _ = require("lodash");
 const { Grade, validateGrade } = require("../models/grade");
 const { School } = require("../models/school");
+const { Classroom } = require("../models/classroom");
 const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const manager = require("../middleware/manager");
@@ -84,6 +85,7 @@ router.delete("/:id", [auth, manager], async (req, res) => {
   if (school.managerId != manager._id)
     return res.status(403).send("شما اجازه حذف این پایه را ندارید.");
 
+  await Classroom.deleteMany({ grade });
   await grade.delete();
 
   res.send("done");
