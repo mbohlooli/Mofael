@@ -9,7 +9,6 @@ const manager = require("../middleware/manager");
 
 const router = express.Router();
 
-//TODO: add a educational Director middleware
 //NOTE: think more about the middlewares of this route
 router.get("/", [auth, manager], async (req, res) => {
   const manager = req.user;

@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
     ..._.pick(req.body, ["username", "password", "firstName", "lastName"]),
     roles: [managerRole]
   });
-
+  //REVIEW: make a seprate function for password generation
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 

@@ -1,8 +1,12 @@
 const express = require("express");
 const _ = require("lodash");
+const bcrypt = require("bcrypt");
 const { School, validateSchool } = require("../models/school");
+const { Role } = require("../models/role");
 const { Grade } = require("../models/grade");
 const { Classroom } = require("../models/classroom");
+const { validateUser } = require("../models/User");
+
 const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const manager = require("../middleware/manager");
@@ -67,6 +71,33 @@ router.delete("/:id", [auth, manager], async (req, res) => {
   await school.delete();
 
   res.send("done");
+});
+
+router.post("/:id", [auth, manager], async (req, res) => {
+  validate(validateUser, req, res);
+
+  const manager = req.user;
+  const school = await School.findById(req.params.id);
+  if (school.managerId != manager._id)
+    return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");
+
+  let user = await user.findOne({ username: req.body.username });
+  if (user) return res.status(400).send("کاربر درحال حاضر وجود دارد.");
+
+  const roles = await Role.find({ name: "مدیر آموزش" });
+  user = new User({
+    ..._.pick(req.body, ["username", "firstName", "lastName"]),
+    roles,
+    schoolId: req.params.id
+  });
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(req.body.password, salt);
+
+  await user.save();
+
+  const token = user.generateAuthToken();
+  res.header("x-auth-token", token).send(JSON.stringify(user));
 });
 
 module.exports = router;
