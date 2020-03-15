@@ -44,17 +44,33 @@ router.post("/", [auth, manager], async (req, res) => {
   res.send(grade);
 });
 
-//NOTE: Does this route need a request body validation function?
 router.put("/:id", [auth, manager], async (req, res) => {
+  validate(validateGrade, req, res);
+
   const grade = await Grade.findById(req.params.id);
   if (!grade) return res.status(404).send("پایه مورد نظر یافت نشد.");
-
+  //TODO: make a function in a seprate file for validating if school belongs to that personel (manager, educational director, ...)
   const manager = req.user;
-  const school = await School.findById(grade.schoolId);
+  let school = await School.findById(grade.schoolId);
   if (school.managerId != manager._id)
     return res.status(403).send("شما اجازه ویرایش این پایه را ندارید.");
+  //REVIEW: refactor this block
+  if (req.body.schoolId) {
+    school = await School.findById(req.body.schoolId);
+    if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
 
-  await grade.update(_.pick(req.body, ["name"]));
+    if (school.managerId != manager._id)
+      return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");
+  }
+
+  const duplicateGrade = await Grade.findOne({
+    schoolId: school._id,
+    name: req.body.name
+  });
+  if (duplicateGrade)
+    return res.status(400).send("پایه مورد نظر قبلا ثبت شده.");
+
+  await grade.update(_.pick(req.body, ["name", "schoolId"]));
 
   res.send(await Grade.findById(req.params.id));
 });
