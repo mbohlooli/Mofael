@@ -2,8 +2,8 @@ const express = require("express");
 const { User, validateUser } = require("../models/user");
 const { Role } = require("../models/role");
 const _ = require("lodash");
-const bcrypt = require("bcrypt");
 const validate = require("../utils/validateRequest");
+const generatePassword = require("../utils/User/GeneratePassword");
 
 const router = express.Router();
 
@@ -15,12 +15,11 @@ router.post("/register", async (req, res) => {
 
   const managerRole = await Role.findOne({ name: "مدیر" });
   user = new User({
-    ..._.pick(req.body, ["username", "password", "firstName", "lastName"]),
+    ..._.pick(req.body, ["username", "firstName", "lastName"]),
     roles: [managerRole]
   });
-  //REVIEW: make a seprate function for password generation
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(user.password, salt);
+
+  user.password = await generatePassword(req.body.password);
 
   await user.save();
 

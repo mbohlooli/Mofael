@@ -22,7 +22,6 @@ router.post("/", [auth, educationalDirector], async (req, res) => {
   const grade = await Grade.findById(req.body.gradeId);
   if (!grade) return res.status(404).send("پایه مورد نظر یافت نشد.");
 
-  //TODO: change this kind of validation to work with teachers and educational directors
   const school = await School.findById(grade.schoolId);
   if (!(await verifySchoolAccess(school, req)))
     return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");

@@ -1,8 +1,5 @@
-const hasPrivillage = require("../HasPrivillage");
+const hasPrivillage = require("../User/HasPrivillage");
 
-//TODO: complete this function
-//REVIEW: school or schoolID?
-//REVIEW: pass res and send the error here?
 module.exports = async function(school, req) {
   const user = req.user;
 

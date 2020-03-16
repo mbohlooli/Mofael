@@ -13,6 +13,7 @@ const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const educationalDirector = require("../middleware/educationalDirector");
 const manager = require("../middleware/manager");
+const generatePassword = require("../utils/User/GeneratePassword");
 
 const router = express.Router();
 
@@ -86,8 +87,7 @@ router.post("/:id", [auth, manager], async (req, res) => {
     schoolId: req.params.id
   });
 
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(req.body.password, salt);
+  user.password = await generatePassword(req.body.password);
 
   await user.save();
 

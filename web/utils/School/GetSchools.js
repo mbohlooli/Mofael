@@ -1,5 +1,5 @@
 const { School } = require("../../models/school");
-const hasPrivillage = require("../HasPrivillage");
+const hasPrivillage = require("../User/HasPrivillage");
 
 module.exports = async function(req) {
   const user = req.user;
