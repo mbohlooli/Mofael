@@ -5,12 +5,13 @@ const { School } = require("../models/school");
 const { Classroom } = require("../models/classroom");
 const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
-const manager = require("../middleware/manager");
+const educationalDirector = require("../middleware/educationalDirector");
+const verifySchoolAccess = require("../utils/School/AuthorizeSchool");
 
 const router = express.Router();
 
 //NOTE: think more about the middlewares of this route
-router.get("/", [auth, manager], async (req, res) => {
+router.get("/", [auth, educationalDirector], async (req, res) => {
   const manager = req.user;
 
   const schools = await School.find({ managerId: manager._id });
@@ -22,15 +23,14 @@ router.get("/", [auth, manager], async (req, res) => {
   res.send(grades);
 });
 
-router.post("/", [auth, manager], async (req, res) => {
+router.post("/", [auth, educationalDirector], async (req, res) => {
   validate(validateGrade, req, res);
 
   const school = await School.findById(req.body.schoolId);
   if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
 
-  const manager = req.user;
-  if (school.managerId != manager._id)
-    return res.status(403).send("شما اجزاه ویرایش این مدرسه را ندارید.");
+  if (!(await verifySchoolAccess(school, req)))
+    return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");
 
   let grade = await Grade.findOne({
     schoolId: school._id,
@@ -44,22 +44,21 @@ router.post("/", [auth, manager], async (req, res) => {
   res.send(grade);
 });
 
-router.put("/:id", [auth, manager], async (req, res) => {
+router.put("/:id", [auth, educationalDirector], async (req, res) => {
   validate(validateGrade, req, res);
 
   const grade = await Grade.findById(req.params.id);
   if (!grade) return res.status(404).send("پایه مورد نظر یافت نشد.");
-  //TODO: make a function in a seprate file for validating if school belongs to that personel (manager, educational director, ...)
-  const manager = req.user;
+
   let school = await School.findById(grade.schoolId);
-  if (school.managerId != manager._id)
+  if (!(await verifySchoolAccess(school, req)))
     return res.status(403).send("شما اجازه ویرایش این پایه را ندارید.");
-  //REVIEW: refactor this block
+
   if (req.body.schoolId) {
     school = await School.findById(req.body.schoolId);
     if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
 
-    if (school.managerId != manager._id)
+    if (!(await verifySchoolAccess(school, req)))
       return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");
   }
 
@@ -75,13 +74,12 @@ router.put("/:id", [auth, manager], async (req, res) => {
   res.send(await Grade.findById(req.params.id));
 });
 
-router.delete("/:id", [auth, manager], async (req, res) => {
+router.delete("/:id", [auth, educationalDirector], async (req, res) => {
   const grade = await Grade.findById(req.params.id);
   if (!grade) return res.status(404).send("پایه مورد نظر یافت نشد.");
 
-  const manager = req.user;
   const school = await School.findById(grade.schoolId);
-  if (school.managerId != manager._id)
+  if (!(await verifySchoolAccess(school, req)))
     return res.status(403).send("شما اجازه حذف این پایه را ندارید.");
 
   await Classroom.deleteMany({ grade });
