@@ -7,14 +7,12 @@ const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const educationalDirector = require("../middleware/educationalDirector");
 const verifySchoolAccess = require("../utils/School/AuthorizeSchool");
+const getSchools = require("../utils/School/GetSchools");
 
 const router = express.Router();
 
-//NOTE: think more about the middlewares of this route
 router.get("/", [auth, educationalDirector], async (req, res) => {
-  const manager = req.user;
-
-  const schools = await School.find({ managerId: manager._id });
+  const schools = await getSchools(req);
 
   let grades = [];
   for (let school of schools)
@@ -71,7 +69,13 @@ router.put("/:id", [auth, educationalDirector], async (req, res) => {
 
   await grade.update(_.pick(req.body, ["name", "schoolId"]));
 
-  res.send(await Grade.findById(req.params.id));
+  const updatedGrade = await Grade.findById(req.params.id);
+
+  const classrooms = await Classroom.find({ grade });
+  for (let classroom of classrooms)
+    await classroom.update({ grade: updatedGrade });
+
+  res.send(updatedGrade);
 });
 
 router.delete("/:id", [auth, educationalDirector], async (req, res) => {
