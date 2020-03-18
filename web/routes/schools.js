@@ -74,6 +74,7 @@ router.delete("/:id", [auth, educationalDirector], async (req, res) => {
 router.post("/:id", [auth, manager], async (req, res) => {
   validate(validateUser, req, res);
 
+  const school = await School.findById(req.params.id);
   if (!(await verifySchoolAccess(school, req)))
     return res.status(403).send("شما اجازه ویرایش این مدرسه را ندارید.");
 
