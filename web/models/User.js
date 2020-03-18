@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema({
   },
   schoolId: {
     type: mongoose.Types.ObjectId
+  },
+  classroomId: {
+    type: mongoose.Types.ObjectId
   }
 });
 
@@ -48,7 +51,8 @@ userSchema.methods.generateAuthToken = function() {
       "firstName",
       "lastName",
       "roles",
-      "schoolId"
+      "schoolId",
+      "classroomId"
     ]),
     config.get("jwtPrivateKey"),
     { expiresIn: "1h" }
