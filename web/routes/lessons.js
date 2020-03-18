@@ -3,12 +3,20 @@ const _ = require("lodash");
 const { Lesson, validateLesson } = require("../models/lesson");
 const { Grade } = require("../models/grade");
 const { School } = require("../models/school");
+const { Classroom } = require("../models/classroom");
 const validate = require("../utils/validateRequest");
 const auth = require("../middleware/auth");
 const educationalDirector = require("../middleware/educationalDirector");
+const student = require("../middleware/student");
 const verifySchoolAccess = require("../utils/School/AuthorizeSchool");
 
 const router = express.Router();
+
+router.get("/", [auth, student], async (req, res) => {
+  const classroom = await Classroom.findById(req.user.classroomId);
+
+  res.send(await Lesson.find({ gradeId: classroom.grade._id }));
+});
 
 router.get("/:id", [auth], async (req, res) => {
   const grade = await Grade.findById(req.params.id);
