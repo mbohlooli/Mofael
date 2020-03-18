@@ -2,8 +2,11 @@ module.exports = function(req, res, next) {
   const user = req.user;
 
   for (let role of user.roles) {
-    if (role.degree == 6) return true;
+    if (role.degree == 6) {
+      next();
+      return;
+    }
   }
 
-  return false;
+  res.status(403).send("ّForbidden.");
 };
