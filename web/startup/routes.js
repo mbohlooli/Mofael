@@ -4,6 +4,7 @@ const auth = require("../routes/auth");
 const schools = require("../routes/schools");
 const grades = require("../routes/grades");
 const classrooms = require("../routes/classrooms");
+const lessons = require("../routes/lessons");
 const error = require("../middleware/error");
 const cors = require("cors");
 
@@ -15,5 +16,6 @@ module.exports = function(app) {
   app.use("/schools", schools);
   app.use("/grades", grades);
   app.use("/classrooms", classrooms);
+  app.use("/lessons", lessons);
   app.use(error);
 };

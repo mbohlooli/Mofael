@@ -20,7 +20,7 @@ const Lesson = mongoose.model("Lessons", lessonSchema);
 
 function validateLesson(lesson) {
   const schema = {
-    name: Joi.String().required(),
+    name: Joi.string().required(),
     gradeId: Joi.objectId().required(),
     multiplier: Joi.number().required()
   };
