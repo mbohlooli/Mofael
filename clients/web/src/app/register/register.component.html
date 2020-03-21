@@ -15,36 +15,36 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">ساخت حساب کاربری جدید</h1>
                 </div>
-                <form class="user">
+                <form class="user" #form="ngForm" (submit)="submit(form.value)">
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                      aria-describedby="emailHelp" placeholder="نام کاربری">
+                    <input type="text" class="form-control form-control-user" placeholder="نام کاربری" name="username"
+                      ngModel #username="ngModel" required>
                   </div>
                   <div class="form-group row">
                     <div class="col-6">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                        aria-describedby="emailHelp" placeholder="نام">
+                      <input type="text" class="form-control form-control-user" placeholder="نام" name="firstName"
+                        ngModel #firstName="ngModel">
                     </div>
                     <div class="col-6">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                        aria-describedby="emailHelp" placeholder="نام خانوادگی">
+                      <input type="text" class="form-control form-control-user" placeholder="نام خانوادگی"
+                        name="lastName" ngModel #lastName="ngModel">
                     </div>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                      placeholder="رمز عبور">
+                    <input type="password" class="form-control form-control-user" placeholder="رمز عبور" name="password"
+                      ngModel #password="ngModel">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                      placeholder="تکرار رمز عبور">
+                    <input type="password" class="form-control form-control-user" placeholder="تکرار رمز عبور"
+                      name="repeatPassword" ngModel #repeatPassword="ngModel">
                   </div>
-                  <a href="index.html" class="btn btn-primary btn-user btn-block">
+                  <button class="btn btn-primary btn-user btn-block" type="submit">
                     ثبت
-                  </a>
+                  </button>
                 </form>
                 <hr>
                 <div class="text-center">
-                  <a class="small" href="register.html">ورود</a>
+                  <a class="small" href="register.html">در حال حاضر حساب کاربری دارید؟ وارد شوید</a>
                 </div>
               </div>
             </div>
