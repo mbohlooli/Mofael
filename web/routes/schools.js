@@ -63,7 +63,7 @@ router.put("/:id", [auth, educationalDirector], async (req, res) => {
   res.send(await School.findById(req.params.id));
 });
 
-router.delete("/:id", [auth, educationalDirector], async (req, res) => {
+router.delete("/:id", [auth, manager], async (req, res) => {
   const school = await School.findById(req.params.id);
   if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
 
