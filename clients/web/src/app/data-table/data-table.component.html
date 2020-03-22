@@ -1,0 +1,66 @@
+<input type="text" class="form-control" style="margin-bottom: 15px;" placeholder="جستجو..." ngModel #query="ngModel"
+  (input)="search(query.value)" />
+<ng-container *ngIf="filteredData.length != 0; else noData">
+  <table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let column of columns" (click)="sort(column.path)" style="cursor: pointer;">
+          {{ column.label }}
+          <i [style.color]="
+              sortColumn.path == column.path ? 'black' : 'transparent'
+            " class="fa {{
+              sortColumn.order == 'asc' ? 'fa-sort-down' : 'fa-sort-up'
+            }}"></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="data-row" *ngFor="let item of pagedData; let i = index" [routerLink]="[url, item._id]">
+        <td style="width: 2%">{{ (page - 1) * limit + i + 1 }}</td>
+        <td *ngFor="let column of columns">
+          <ng-container *ngIf="getType(pick(item, column.path)) != 'object'; else obj">{{ pick(item, column.path) }}
+          </ng-container>
+          <ng-template #obj>
+            <span *ngFor="let subItem of pick(item, column.path); let j = index"
+              [class]="column.classes[subItem[column.subPath]]">
+              {{ pick(subItem, column.subPath) }}
+            </span>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-2">
+      <div class="input-group input-group-sm mb-3" style="width: 150px;">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">تعداد</span>
+        </div>
+        <input type="number" class="form-control" [(ngModel)]="limit" (input)="syncPages()" [min]="1"
+          [max]="filteredData.length" />
+      </div>
+    </div>
+    <div class="col-7"></div>
+    <div class="col">
+      <div class="float-left">
+        <small style="margin-left: 25px;color: rgb(134, 134, 134)">
+          {{ filteredData.length }} /
+          {{ min(page * limit, filteredData.length) }} -
+          {{ (page - 1) * limit + 1 }}
+        </small>
+        <button (click)="shiftPage(1)" [disabled]="page * limit >= filteredData.length" mat-icon-button>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <button (click)="shiftPage(-1)" [disabled]="(page - 1) * limit == 0" mat-icon-button>
+          <i class="fas fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #noData>
+  <div class="card bg-info text-white shadow rtl">
+    داده ای برای نمایش یافت نشد.
+  </div>
+</ng-template>
