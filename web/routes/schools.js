@@ -17,8 +17,19 @@ const generatePassword = require("../utils/User/GeneratePassword");
 
 const router = express.Router();
 
-router.get("/", [auth, educationalDirector], async (req, res) => {
+router.get("/", [auth, manager], async (req, res) => {
   res.send(await getSchools(req));
+});
+
+router.get('/count/:id', [auth, educationalDirector], async (req, res) => {
+  const school = await School.findById(req.params.id);
+  if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
+
+  if (!(await verifySchoolAccess(school, req)))
+    return res.status(403).send("شما اجازه دسترسی به این مدرسه را ندارید.");
+  const users = await User.find({ schoolId: req.params.id })
+
+  res.send(JSON.stringify(users.length));
 });
 
 router.post("/", [auth, educationalDirector], async (req, res) => {

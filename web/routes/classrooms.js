@@ -103,7 +103,8 @@ router.post(
     user = new User({
       ..._.pick(req.body, ["username", "firstName", "lastName"]),
       roles,
-      classroomId: req.params.id
+      classroomId: req.params.id,
+      schoolId: classroom.grade.schoolId
     });
 
     user.password = await generatePassword(req.body.password);
