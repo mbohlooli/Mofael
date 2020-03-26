@@ -1,17 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
-import * as _ from 'lodash';
+import { Component, OnInit, Input } from "@angular/core";
+import * as _ from "lodash";
 
 @Component({
-  selector: 'data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.css']
+  selector: "data-table",
+  templateUrl: "./data-table.component.html",
+  styleUrls: ["./data-table.component.css"]
 })
 export class DataTableComponent implements OnInit {
-
   @Input("columns") columns;
   @Input("data") data: any[];
   @Input("defaultPath") defaultPath;
   @Input("url") url;
+  @Input("actions") actions = {
+    update: true,
+    delete: true
+  };
 
   sortColumn = { path: "", order: "" };
   limit: number;
@@ -47,11 +50,11 @@ export class DataTableComponent implements OnInit {
     this.paginateData();
   }
 
-  syncPages() {
+  syncPages(pageNumber = 1) {
     if (this.limit <= 0) this.limit = 1;
     if (this.limit >= this.filteredData.length)
       this.limit = this.filteredData.length;
-    this.page = 1;
+    this.page = pageNumber;
     this.pagesCount = Math.ceil(this.data.length / this.limit);
     this.paginateData();
   }
@@ -66,13 +69,13 @@ export class DataTableComponent implements OnInit {
   search(query: string) {
     this.filteredData = query
       ? this.filteredData.filter(item => {
-        for (let column of this.columns)
-          if (
-            typeof item[`${column.path}`] == "string" &&
-            item[`${column.path}`].toLowerCase().includes(query.toLowerCase())
-          )
-            return item;
-      })
+          for (let column of this.columns)
+            if (
+              typeof item[`${column.path}`] == "string" &&
+              item[`${column.path}`].toLowerCase().includes(query.toLowerCase())
+            )
+              return item;
+        })
       : this.data;
     if (query == "") this.limit = Math.min(this.data.length, 5);
     this.syncPages();
@@ -86,4 +89,14 @@ export class DataTableComponent implements OnInit {
     return typeof variable;
   }
 
+  getPageNumbersArray() {
+    let pages = [];
+    for (let i = 1; i <= this.pagesCount; i++) pages.push(i);
+
+    return pages;
+  }
+
+  log(x) {
+    console.log(x);
+  }
 }

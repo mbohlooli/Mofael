@@ -1,6 +1,6 @@
-import { AuthService } from './../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
 
