@@ -53,8 +53,6 @@
           </ng-template>
         </td>
         <td *ngIf="actions.update || actions.delete">
-          <!--TODO: 2-add a button for delte all with a dialog-->
-          <!--TODO: 3-add a checkbox if not checked show dialog for deleting -->
           <!-- REVIEW: bootstrap toast shall be useful -->
           <button
             *ngIf="actions.update"
@@ -63,7 +61,15 @@
           >
             <i class="fas fa-pen"></i>
           </button>
-          <button *ngIf="actions.delete" class="btn btn-danger btn-circle">
+          <button
+            *ngIf="actions.delete"
+            class="btn btn-danger btn-circle"
+            data-toggle="modal"
+            [attr.data-target]="deleteWithoutWarning ? '' : '#deleteModal'"
+            (click)="
+              this.deleteIndex = filteredData[i]; deleteIndex ? delete() : ''
+            "
+          >
             <i class="fas fa-trash"></i>
           </button>
         </td>
@@ -86,12 +92,35 @@
         />
       </div>
     </div>
-    <div class="col-7">
+    <div class="col-3">
       <div class="center">
         نمایش {{ limit }} مورد از {{ filteredData.length }}
+
+        <button
+          class="btn btn-sm btn-danger"
+          style="margin-right: 20px;"
+          (click)="log('TODO: delete all of the items')"
+        >
+          &times; حذف همه
+        </button>
       </div>
     </div>
-    <div class="col">
+    <div class="col-5">
+      <div class="float-left">
+        <div class="custom-control custom-checkbox mr-sm-2">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="customControlAutosizing"
+            [(ngModel)]="deleteWithoutWarning"
+          />
+          <label class="custom-control-label" for="customControlAutosizing"
+            >حذف بدون اخطار</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
       <div class="float-left">
         <nav>
           <ul class="pagination">
@@ -136,3 +165,45 @@
     داده ای برای نمایش یافت نشد.
   </div>
 </ng-template>
+
+<!-- delete Modal-->
+<div
+  class="modal fade rtl"
+  id="deleteModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">خروج</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span (click)="deleteIndex = -1" aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        آیا از حذف این مورد اطمینان دارید؟
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-secondary"
+          (click)="deleteIndex = -1"
+          type="button"
+          data-dismiss="modal"
+        >
+          انصراف
+        </button>
+        <button class="btn btn-danger" (click)="delete()" data-dismiss="modal">
+          حذف
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

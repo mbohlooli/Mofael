@@ -22,6 +22,8 @@ export class DataTableComponent implements OnInit {
   page = 1;
   filteredData: any[];
   pagedData: any[];
+  deleteIndex = -1;
+  deleteWithoutWarning = false;
 
   ngOnInit() {
     this.filteredData = this.data;
@@ -94,6 +96,10 @@ export class DataTableComponent implements OnInit {
     for (let i = 1; i <= this.pagesCount; i++) pages.push(i);
 
     return pages;
+  }
+
+  delete() {
+    console.log(this.deleteIndex);
   }
 
   log(x) {
