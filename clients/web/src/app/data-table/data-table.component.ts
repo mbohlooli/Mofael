@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Router } from "@angular/router";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import * as _ from "lodash";
 
 @Component({
@@ -10,12 +11,16 @@ export class DataTableComponent implements OnInit {
   @Input("columns") columns;
   @Input("data") data: any[];
   @Input("defaultPath") defaultPath;
-  @Input("url") url;
+  @Input("infoUrl") infoUrl;
+  @Input("updateUrl") updateUrl;
   @Input("actions") actions = {
     update: true,
     delete: true,
     info: true
   };
+
+  @Output("onDeleteItem") deleteItemEvent = new EventEmitter();
+  @Output("onDeleteAll") deleteAllEvent = new EventEmitter();
 
   sortColumn = { path: "", order: "" };
   limit: number;
@@ -25,6 +30,11 @@ export class DataTableComponent implements OnInit {
   pagedData: any[];
   deleteIndex = -1;
   deleteWithoutWarning = false;
+  router: Router;
+
+  constructor(router: Router) {
+    this.router = router;
+  }
 
   ngOnInit() {
     this.filteredData = this.data;
@@ -100,11 +110,11 @@ export class DataTableComponent implements OnInit {
   }
 
   delete() {
-    console.log(this.deleteIndex);
+    this.deleteItemEvent.emit(this.filteredData[this.deleteIndex]);
   }
 
   deleteAll() {
-    console.log("delete all");
+    this.deleteAllEvent.emit("");
   }
 
   log(x) {

@@ -48,12 +48,13 @@
             </span>
           </ng-template>
         </td>
-        <td *ngIf="actions.update || actions.delete">
+        <td *ngIf="actions.update || actions.delete || actions.info">
           <!-- REVIEW: bootstrap toast shall be useful -->
           <button
             *ngIf="actions.info"
             class="btn btn-info btn-circle"
             style="margin-left: 10px;"
+            (click)="router.navigate([infoUrl])"
           >
             <i class="fas fa-info"></i>
           </button>
@@ -61,6 +62,7 @@
             *ngIf="actions.update"
             class="btn btn-primary btn-circle"
             style="margin-left: 10px;"
+            (click)="router.navigate(updateUrl)"
           >
             <i class="fas fa-pen"></i>
           </button>
