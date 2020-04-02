@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { DataTableComponent } from './data-table/data-table.component';
+import { SchoolFormComponent } from './school-form/school-form.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DataTableComponent } from './data-table/data-table.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    DataTableComponent
+    DataTableComponent,
+    SchoolFormComponent
   ],
   imports: [
     BrowserModule,

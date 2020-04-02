@@ -167,7 +167,11 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <button class="btn btn-success" style="margin-bottom: 20px;">
+                  <button
+                    class="btn btn-success"
+                    style="margin-bottom: 20px;"
+                    (click)="router.navigate(['/school/new'])"
+                  >
                     + ثبت مدرسه جدید
                   </button>
                   <data-table
