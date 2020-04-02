@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { ActivatedRoute } from "@angular/router";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
   url = "http://localhost:3000/auth/login";
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   login(credentials) {
     let returnUrl = this.route.snapshot.queryParamMap.get("returnUrl") || "/";
@@ -20,5 +20,13 @@ export class AuthService {
   isLoggedIn() {
     const jwt = new JwtHelperService();
     return !jwt.isTokenExpired(localStorage.getItem("token"));
+  }
+
+  get currentUser() {
+    const jwt = new JwtHelperService();
+    let token = localStorage.getItem("token");
+    if (!token) return null;
+
+    return jwt.decodeToken(token);
   }
 }

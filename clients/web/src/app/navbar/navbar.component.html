@@ -1,20 +1,29 @@
 <!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+<nav
+  class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+>
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
-
     <!-- Nav Item - Alerts -->
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        id="alertsDropdown"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
         <span class="badge badge-danger badge-counter">3+</span>
       </a>
       <!-- Dropdown - Alerts -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="alertsDropdown">
+      <div
+        class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="alertsDropdown"
+      >
         <h6 class="dropdown-header">
           اعلان ها
         </h6>
@@ -26,41 +35,60 @@
           </div>
           <div>
             <div class="small text-gray-500">December 12, 2019</div>
-            <span class="font-weight-bold">A new monthly report is ready to download!</span>
+            <span class="font-weight-bold"
+              >A new monthly report is ready to download!</span
+            >
           </div>
         </a>
-        <a class="dropdown-item text-center small text-gray-500" href="#">مشاهده همه اعلان ها</a>
+        <a class="dropdown-item text-center small text-gray-500" href="#"
+          >مشاهده همه اعلان ها</a
+        >
       </div>
     </li>
 
     <!-- Nav Item - Messages -->
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        id="messagesDropdown"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
         <i class="fas fa-envelope fa-fw"></i>
         <!-- Counter - Messages -->
         <span class="badge badge-danger badge-counter">7</span>
       </a>
       <!-- Dropdown - Messages -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-        aria-labelledby="messagesDropdown">
+      <div
+        class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="messagesDropdown"
+      >
         <h6 class="dropdown-header">
           پیام ها
         </h6>
         <a class="dropdown-item d-flex align-items-center" href="#">
           <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="" />
+            <img
+              class="rounded-circle"
+              src="https://source.unsplash.com/fn_BT9fwg_E/60x60"
+              alt=""
+            />
             <div class="status-indicator bg-success"></div>
           </div>
           <div class="font-weight-bold">
             <div class="text-truncate">
-              Hi there! I am wondering if you can help me with a problem
-              I've been having.
+              Hi there! I am wondering if you can help me with a problem I've
+              been having.
             </div>
             <div class="small text-gray-500">Emily Fowler · 58m</div>
           </div>
         </a>
-        <a class="dropdown-item text-center small text-gray-600" href="#">مشاهده همه پیام ها</a>
+        <a class="dropdown-item text-center small text-gray-600" href="#"
+          >مشاهده همه پیام ها</a
+        >
       </div>
     </li>
 
@@ -68,20 +96,40 @@
 
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        id="userDropdown"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
         <!-- TODO: add the current user name here -->
-        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
+          currentUser.firstName + " " + currentUser.lastName
+        }}</span>
+        <img
+          class="img-profile rounded-circle"
+          src="https://source.unsplash.com/QAB-WJcbgJk/60x60"
+        />
       </a>
       <!-- Dropdown - User Information -->
-      <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+      <div
+        class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="userDropdown"
+      >
         <a class="dropdown-item" href="#">
           <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-          Profile
+          پروفایل
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+        <a
+          class="dropdown-item"
+          href="#"
+          data-toggle="modal"
+          data-target="#logoutModal"
+        >
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
           خروج
         </a>
@@ -92,13 +140,24 @@
 <!-- End of Topbar -->
 
 <!-- Logout Modal-->
-<div class="modal fade rtl" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade rtl"
+  id="logoutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">خروج</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -109,7 +168,9 @@
         <button class="btn btn-secondary" type="button" data-dismiss="modal">
           انصراف
         </button>
-        <button class="btn btn-primary" (click)="logout()" data-dismiss="modal">خروج</button>
+        <button class="btn btn-primary" (click)="logout()" data-dismiss="modal">
+          خروج
+        </button>
       </div>
     </div>
   </div>
