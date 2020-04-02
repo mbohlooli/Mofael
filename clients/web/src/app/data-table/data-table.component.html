@@ -28,15 +28,11 @@
             }}"
           ></i>
         </th>
-        <th *ngIf="actions.update || actions.delete"></th>
+        <th *ngIf="actions.update || actions.delete || actions.info"></th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        class="data-row"
-        *ngFor="let item of pagedData; let i = index"
-        [routerLink]="[url, item._id]"
-      >
+      <tr class="data-row" *ngFor="let item of pagedData; let i = index">
         <td style="width: 2%">{{ (page - 1) * limit + i + 1 }}</td>
         <td *ngFor="let column of columns">
           <ng-container
@@ -54,6 +50,13 @@
         </td>
         <td *ngIf="actions.update || actions.delete">
           <!-- REVIEW: bootstrap toast shall be useful -->
+          <button
+            *ngIf="actions.info"
+            class="btn btn-info btn-circle"
+            style="margin-left: 10px;"
+          >
+            <i class="fas fa-info"></i>
+          </button>
           <button
             *ngIf="actions.update"
             class="btn btn-primary btn-circle"

@@ -13,7 +13,8 @@ export class DataTableComponent implements OnInit {
   @Input("url") url;
   @Input("actions") actions = {
     update: true,
-    delete: true
+    delete: true,
+    info: true
   };
 
   sortColumn = { path: "", order: "" };
