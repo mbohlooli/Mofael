@@ -99,7 +99,8 @@
         <button
           class="btn btn-sm btn-danger"
           style="margin-right: 20px;"
-          (click)="log('TODO: delete all of the items')"
+          data-toggle="modal"
+          [attr.data-target]="'#deleteAllModal'"
         >
           &times; حذف همه
         </button>
@@ -181,7 +182,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">خروج</h5>
+        <h5 class="modal-title" id="exampleModalLabel">اخطار</h5>
         <button
           class="close"
           type="button"
@@ -204,6 +205,52 @@
           انصراف
         </button>
         <button class="btn btn-danger" (click)="delete()" data-dismiss="modal">
+          حذف
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- delete all Modal-->
+<div
+  class="modal fade rtl"
+  id="deleteAllModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">اخطار</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span (click)="deleteIndex = -1" aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        آیا از حذف همه موارد اطمینان دارید؟
+      </div>
+      <div class="modal-footer">
+        <button
+          class="btn btn-secondary"
+          (click)="deleteIndex = -1"
+          type="button"
+          data-dismiss="modal"
+        >
+          انصراف
+        </button>
+        <button
+          class="btn btn-danger"
+          (click)="deleteAll()"
+          data-dismiss="modal"
+        >
           حذف
         </button>
       </div>

@@ -102,6 +102,10 @@ export class DataTableComponent implements OnInit {
     console.log(this.deleteIndex);
   }
 
+  deleteAll() {
+    console.log("delete all");
+  }
+
   log(x) {
     console.log(x);
   }
