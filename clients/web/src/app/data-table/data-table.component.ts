@@ -28,7 +28,7 @@ export class DataTableComponent implements OnInit {
   page = 1;
   filteredData: any[];
   pagedData: any[];
-  deleteIndex = -1;
+  deleteIndex;
   deleteWithoutWarning = false;
   router: Router;
 
@@ -110,11 +110,13 @@ export class DataTableComponent implements OnInit {
   }
 
   delete() {
-    this.deleteItemEvent.emit(this.filteredData[this.deleteIndex]);
+    this.deleteItemEvent.emit(this.pagedData[this.deleteIndex]._id);
+    this.deleteIndex = -1;
   }
 
   deleteAll() {
     this.deleteAllEvent.emit("");
+    this.deleteIndex = -1;
   }
 
   log(x) {

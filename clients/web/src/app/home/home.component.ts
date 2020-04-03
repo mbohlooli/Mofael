@@ -26,4 +26,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.schools$ = this.schoolService.getSchools();
   }
+
+  delete(id) {
+    this.schoolService
+      .delete(id)
+      .subscribe(() => (this.schools$ = this.schoolService.getSchools()));
+  }
 }

@@ -30,4 +30,8 @@ export class SchoolService {
   getPersonelCount(id) {
     return this.http.get(this.url + "/count/" + id, { headers: this.headers });
   }
+
+  delete(id) {
+    return this.http.delete(this.url + "/" + id, { headers: this.headers });
+  }
 }
