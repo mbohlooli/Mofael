@@ -1,7 +1,4 @@
-<div
-  id="page-top"
-  *ngIf="router.url != '/login' && router.url != '/register'; else rawPage"
->
+<div id="page-top" *ngIf="authService.isLoggedIn(); else rawPage">
   <div class="rtl" id="wrapper">
     <sidebar></sidebar>
     <div id="content-wrapper" class="d-flex flex-column rtl">
