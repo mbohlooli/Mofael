@@ -1,21 +1,24 @@
-import { AuthService } from '../services/auth.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
-import * as _ from 'lodash';
+import { AuthService } from "../services/auth.service";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { UserService } from "../services/user.service";
+import { Router } from "@angular/router";
+import * as _ from "lodash";
 
 @Component({
-  selector: 'register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: "register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
   encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit {
-
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) this.router.navigate(['/']);
+    if (this.authService.isLoggedIn()) this.router.navigate(["/"]);
   }
 
   submit(data) {
@@ -25,9 +28,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.userService.register(_.pick(data, ["username", "password", "firstName", "lastName"])).subscribe(res => {
-      this.router.navigate(['/login']);
-    });
+    this.userService
+      .register(_.pick(data, ["username", "password", "firstName", "lastName"]))
+      .subscribe(() => this.router.navigate(["/login"]));
   }
-
 }

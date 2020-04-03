@@ -1,4 +1,8 @@
+import { Router } from "@angular/router";
+import { SchoolService } from "./../services/school.service";
+import { AuthService } from "./../services/auth.service";
 import { Component, OnInit } from "@angular/core";
+import { School } from "../models/school";
 
 @Component({
   selector: "school-form",
@@ -6,11 +10,21 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./school-form.component.css"]
 })
 export class SchoolFormComponent implements OnInit {
-  constructor() {}
+  school: School;
 
-  ngOnInit() {}
+  constructor(
+    private authService: AuthService,
+    private schoolService: SchoolService,
+    private router: Router
+  ) {}
 
-  submit(data) {
-    console.log(data);
+  ngOnInit() {
+    this.school = { name: "", city: "", zone: "" };
+  }
+
+  submit() {
+    this.schoolService
+      .create(this.school)
+      .subscribe(() => this.router.navigate(["/"]));
   }
 }

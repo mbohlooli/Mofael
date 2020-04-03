@@ -9,7 +9,7 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">ثبت مدرسه جدید</h1>
                 </div>
-                <form class="user" #form="ngForm" (submit)="submit(form.value)">
+                <form class="user" #form="ngForm" (submit)="submit()">
                   <div class="form-group row">
                     <div class="col-12">
                       <input
@@ -17,8 +17,7 @@
                         class="form-control form-control-user"
                         placeholder="نام"
                         name="name"
-                        ngModel
-                        #name="ngModel"
+                        [(ngModel)]="school.name"
                         required
                       />
                     </div>
@@ -29,8 +28,7 @@
                       class="form-control form-control-user"
                       placeholder="شهر"
                       name="city"
-                      ngModel
-                      #city="ngModel"
+                      [(ngModel)]="school.city"
                       required
                     />
                   </div>
@@ -40,8 +38,7 @@
                       class="form-control form-control-user"
                       placeholder="منطقه"
                       name="zone"
-                      ngModel
-                      #zone="ngModel"
+                      [(ngModel)]="school.zone"
                       required
                     />
                   </div>

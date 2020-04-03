@@ -9,26 +9,25 @@ import { map } from "rxjs/operators";
 })
 export class SchoolService {
   url = "http://localhost:3000/schools";
+  headers: HttpHeaders;
 
-  constructor(private http: HttpClient) {}
-
-  getSchools(): Observable<School[]> {
-    let headers = new HttpHeaders({
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
       "x-auth-token": localStorage.getItem("token")
     });
+  }
+
+  getSchools(): Observable<School[]> {
     return this.http
-      .get(this.url, { headers })
+      .get(this.url, { headers: this.headers })
       .pipe(map((res: School[]) => res));
   }
 
-  create(data) {
-    console.log(data);
+  create(school: School) {
+    return this.http.post(this.url, school, { headers: this.headers });
   }
 
   getPersonelCount(id) {
-    let headers = new HttpHeaders({
-      "x-auth-token": localStorage.getItem("token")
-    });
-    return this.http.get(this.url + "/count/" + id, { headers });
+    return this.http.get(this.url + "/count/" + id, { headers: this.headers });
   }
 }
