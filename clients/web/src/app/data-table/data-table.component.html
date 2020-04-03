@@ -72,9 +72,8 @@
             data-toggle="modal"
             [attr.data-target]="deleteWithoutWarning ? '' : '#deleteModal'"
             (click)="
-              this.deleteIndex = i;
               deleteWithoutWarning
-                ? delete()
+                ? deleteByIndex(i)
                 : deleteIndex > 0
                 ? delete()
                 : (this.deleteIndex = i)

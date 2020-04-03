@@ -21,13 +21,13 @@ router.get("/", [auth, manager], async (req, res) => {
   res.send(await getSchools(req));
 });
 
-router.get('/count/:id', [auth, educationalDirector], async (req, res) => {
+router.get("/count/:id", [auth, educationalDirector], async (req, res) => {
   const school = await School.findById(req.params.id);
   if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
 
   if (!(await verifySchoolAccess(school, req)))
     return res.status(403).send("شما اجازه دسترسی به این مدرسه را ندارید.");
-  const users = await User.find({ schoolId: req.params.id })
+  const users = await User.find({ schoolId: req.params.id });
 
   res.send(JSON.stringify(users.length));
 });
@@ -79,7 +79,7 @@ router.delete("/:id", [auth, manager], async (req, res) => {
 
   await school.delete();
 
-  res.send("done");
+  res.send(JSON.stringify("done"));
 });
 
 router.post("/:id", [auth, manager], async (req, res) => {

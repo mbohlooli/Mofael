@@ -33,6 +33,7 @@ export class DataTableComponent implements OnInit {
   router: Router;
 
   constructor(router: Router) {
+    //FIXME: the delete without warning must not reset when the table is reloded with new data
     this.router = router;
   }
 
@@ -111,6 +112,11 @@ export class DataTableComponent implements OnInit {
 
   delete() {
     this.deleteItemEvent.emit(this.pagedData[this.deleteIndex]._id);
+    this.deleteIndex = -1;
+  }
+
+  deleteByIndex(index) {
+    this.deleteItemEvent.emit(this.pagedData[index]._id);
     this.deleteIndex = -1;
   }
 
