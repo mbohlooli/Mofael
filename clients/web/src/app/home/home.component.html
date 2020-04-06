@@ -179,6 +179,7 @@
             [columns]="columns"
             [defaultPath]="'name'"
             (onDeleteItem)="delete($event)"
+            (onDeleteAll)="deleteAll($event)"
             [deleteWithoutWarning]="deleteWithoutWarning"
           ></data-table>
         </div>

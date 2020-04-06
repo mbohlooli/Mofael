@@ -33,4 +33,10 @@ export class HomeComponent implements OnInit {
       .delete(id)
       .subscribe(() => (this.schools$ = this.schoolService.getSchools()));
   }
+
+  deleteAll(schools) {
+    this.schoolService
+      .deleteAll()
+      .subscribe(() => (this.schools$ = this.schoolService.getSchools()));
+  }
 }

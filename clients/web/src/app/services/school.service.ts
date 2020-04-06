@@ -5,7 +5,7 @@ import { School } from "../models/school";
 import { map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class SchoolService {
   url = "http://localhost:3000/schools";
@@ -13,7 +13,7 @@ export class SchoolService {
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
-      "x-auth-token": localStorage.getItem("token")
+      "x-auth-token": localStorage.getItem("token"),
     });
   }
 
@@ -33,5 +33,9 @@ export class SchoolService {
 
   delete(id) {
     return this.http.delete(this.url + "/" + id, { headers: this.headers });
+  }
+
+  deleteAll() {
+    return this.http.delete(this.url, { headers: this.headers });
   }
 }
