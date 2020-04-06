@@ -7,7 +7,7 @@ import { School } from "../models/school";
 @Component({
   selector: "school-form",
   templateUrl: "./school-form.component.html",
-  styleUrls: ["./school-form.component.css"]
+  styleUrls: ["./school-form.component.css"],
 })
 export class SchoolFormComponent implements OnInit {
   school: School;
@@ -23,6 +23,8 @@ export class SchoolFormComponent implements OnInit {
   }
 
   submit() {
+    if (parseInt(this.school.zone) < 1) return;
+
     this.schoolService
       .create(this.school)
       .subscribe(() => this.router.navigate(["/"]));

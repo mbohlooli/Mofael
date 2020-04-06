@@ -15,32 +15,77 @@
                       <input
                         type="text"
                         class="form-control form-control-user"
+                        [class.is-invalid]="
+                          schoolName.touched && !schoolName.valid
+                        "
+                        [class.is-valid]="
+                          schoolName.touched && schoolName.valid
+                        "
                         placeholder="نام"
                         name="name"
                         [(ngModel)]="school.name"
+                        #schoolName="ngModel"
+                        minlength="3"
                         required
                       />
+                      <div class="invalid-feedback" *ngIf="!schoolName.valid">
+                        <div *ngIf="schoolName.errors.required">
+                          نام مدرسه الزامی است.
+                        </div>
+                        <div *ngIf="schoolName.errors.minlength">
+                          نام مدرسه باید حداقل 3 کاراکتر باشد.
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
                     <input
                       type="text"
                       class="form-control form-control-user"
+                      [class.is-invalid]="
+                        schoolCity.touched && !schoolCity.valid
+                      "
+                      [class.is-valid]="schoolCity.touched && schoolCity.valid"
                       placeholder="شهر"
                       name="city"
                       [(ngModel)]="school.city"
+                      #schoolCity="ngModel"
                       required
                     />
+                    <div class="invalid-feedback" *ngIf="!schoolCity.valid">
+                      <div *ngIf="schoolCity.errors.required">
+                        نام شهر الزامی است.
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <input
                       type="number"
                       class="form-control form-control-user"
+                      [class.is-invalid]="
+                        (schoolZone.touched && !schoolZone.valid) ||
+                        (schoolZone.value && schoolZone.value < 1)
+                      "
+                      [class.is-valid]="schoolZone.touched && schoolZone.valid"
                       placeholder="منطقه"
                       name="zone"
                       [(ngModel)]="school.zone"
+                      #schoolZone="ngModel"
                       required
                     />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="!schoolZone.valid || schoolZone.value < 1"
+                    >
+                      <div
+                        *ngIf="!schoolZone.valid && schoolZone.errors.required"
+                      >
+                        منطقه الزامی است.
+                      </div>
+                      <div *ngIf="schoolZone.valid && schoolZone.value < 1">
+                        منطقه نا معتبر.
+                      </div>
+                    </div>
                   </div>
                   <button
                     class="btn btn-primary btn-user btn-block"
