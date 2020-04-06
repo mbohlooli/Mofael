@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(data).subscribe(
       (token) => {
         localStorage.setItem("token", token.toString());
+        console.log(this.authService.currentUser);
+        console.log(token);
         let returnUrl = localStorage.getItem("returnUrl");
 
         localStorage.removeItem("returnUrl");

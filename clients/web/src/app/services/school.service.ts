@@ -11,31 +11,42 @@ export class SchoolService {
   url = "http://localhost:3000/schools";
   headers: HttpHeaders;
 
-  constructor(private http: HttpClient) {
-    this.headers = new HttpHeaders({
-      "x-auth-token": localStorage.getItem("token"),
-    });
-  }
+  constructor(private http: HttpClient) {}
 
   getSchools(): Observable<School[]> {
+    let headers = new HttpHeaders({
+      "x-auth-token": localStorage.getItem("token"),
+    });
     return this.http
-      .get(this.url, { headers: this.headers })
+      .get(this.url, { headers })
       .pipe(map((res: School[]) => res));
   }
 
   create(school: School) {
-    return this.http.post(this.url, school, { headers: this.headers });
+    let headers = new HttpHeaders({
+      "x-auth-token": localStorage.getItem("token"),
+    });
+    return this.http.post(this.url, school, { headers });
   }
 
   getPersonelCount(id) {
-    return this.http.get(this.url + "/count/" + id, { headers: this.headers });
+    let headers = new HttpHeaders({
+      "x-auth-token": localStorage.getItem("token"),
+    });
+    return this.http.get(this.url + "/count/" + id, { headers });
   }
 
   delete(id) {
-    return this.http.delete(this.url + "/" + id, { headers: this.headers });
+    let headers = new HttpHeaders({
+      "x-auth-token": localStorage.getItem("token"),
+    });
+    return this.http.delete(this.url + "/" + id, { headers });
   }
 
   deleteAll() {
-    return this.http.delete(this.url, { headers: this.headers });
+    let headers = new HttpHeaders({
+      "x-auth-token": localStorage.getItem("token"),
+    });
+    return this.http.delete(this.url, { headers });
   }
 }

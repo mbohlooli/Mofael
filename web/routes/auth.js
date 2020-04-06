@@ -24,14 +24,8 @@ module.exports = router;
 
 function validateAuthRequest(req) {
   const schema = {
-    username: Joi.string()
-      .min(3)
-      .max(50)
-      .required(),
-    password: Joi.string()
-      .min(8)
-      .max(50)
-      .required()
+    username: Joi.string().min(3).max(50).required(),
+    password: Joi.string().min(8).max(50).required(),
   };
 
   return Joi.validate(req, schema);
