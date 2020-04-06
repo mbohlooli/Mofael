@@ -11,6 +11,7 @@ import { School } from "../models/school";
 })
 export class SchoolFormComponent implements OnInit {
   school: School;
+  schoolExisted = false;
 
   constructor(
     private authService: AuthService,
@@ -25,8 +26,9 @@ export class SchoolFormComponent implements OnInit {
   submit() {
     if (parseInt(this.school.zone) < 1) return;
 
-    this.schoolService
-      .create(this.school)
-      .subscribe(() => this.router.navigate(["/"]));
+    this.schoolService.create(this.school).subscribe(
+      () => this.router.navigate(["/"]),
+      (err) => (this.schoolExisted = true)
+    );
   }
 }

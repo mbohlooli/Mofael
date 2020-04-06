@@ -7,36 +7,29 @@ const schoolSchema = new mongoose.Schema({
     minlength: 3,
     maxlength: 50,
     unique: true,
-    required: true
+    required: true,
   },
   city: {
     type: String,
-    minlength: 3,
     maxlength: 30,
-    required: true
+    required: true,
   },
   zone: {
     type: Number,
-    required: true
+    required: true,
   },
   managerId: {
-    type: mongoose.Types.ObjectId
-  }
+    type: mongoose.Types.ObjectId,
+  },
 });
 
 const School = mongoose.model("Schools", schoolSchema);
 
 function validateSchool(school) {
   const schema = {
-    name: Joi.string()
-      .min(3)
-      .max(50)
-      .required(),
-    city: Joi.string()
-      .min(3)
-      .max(30)
-      .required(),
-    zone: Joi.number().required()
+    name: Joi.string().min(3).max(50).required(),
+    city: Joi.string().max(30).required(),
+    zone: Joi.number().required(),
   };
 
   return Joi.validate(school, schema);
