@@ -21,6 +21,16 @@ router.get("/", [auth, manager], async (req, res) => {
   res.send(await getSchools(req));
 });
 
+router.get("/:id", [auth, manager], async (req, res) => {
+  const school = await School.findById(req.params.id);
+  if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
+
+  if (!(await verifySchoolAccess(school, req)))
+    return res.status(403).send("شما اجازه دسترسی به این مدرسه را ندارید.");
+
+  res.send(JSON.stringify(school));
+});
+
 router.get("/count/:id", [auth, educationalDirector], async (req, res) => {
   const school = await School.findById(req.params.id);
   if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
