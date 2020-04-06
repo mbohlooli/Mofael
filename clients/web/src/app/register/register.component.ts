@@ -8,9 +8,11 @@ import * as _ from "lodash";
   selector: "register",
   templateUrl: "./register.component.html",
   styleUrls: ["./register.component.css"],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class RegisterComponent implements OnInit {
+  validRepeatPassword = true;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -23,8 +25,7 @@ export class RegisterComponent implements OnInit {
 
   submit(data) {
     if (data.repeatPassword != data.password) {
-      //TODO: add validation and display a message
-      console.log("error");
+      this.validRepeatPassword = false;
       return;
     }
 

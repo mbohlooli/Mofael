@@ -1,8 +1,6 @@
 <div class="container rtl" style="padding-top: 5%;">
   <div class="row justify-content-center">
-
     <div class="col-xl-10 col-lg-12 col-md-9">
-
       <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
           <div class="row">
@@ -14,43 +12,151 @@
                 </div>
                 <form class="user" #form="ngForm" (submit)="submit(form.value)">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-user" placeholder="نام کاربری" name="username"
-                      ngModel #username="ngModel" required>
+                    <input
+                      type="text"
+                      class="form-control form-control-user"
+                      [class.is-invalid]="username.touched && !username.valid"
+                      [class.is-valid]="username.touched && username.valid"
+                      placeholder="نام کاربری"
+                      name="username"
+                      ngModel
+                      #username="ngModel"
+                      minlength="3"
+                      required
+                    />
+                    <div class="invalid-feedback" *ngIf="!username.valid">
+                      <div *ngIf="username.errors.required">
+                        نام کاربری الزامی است.
+                      </div>
+                      <div *ngIf="username.errors.minlength">
+                        نام کاربری باید حداقل 3 کاراکتر باشد.
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-6">
-                      <input type="text" class="form-control form-control-user" placeholder="نام" name="firstName"
-                        ngModel #firstName="ngModel">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        [class.is-invalid]="
+                          firstName.touched && !firstName.valid
+                        "
+                        [class.is-valid]="firstName.touched && firstName.valid"
+                        placeholder="نام"
+                        name="firstName"
+                        ngModel
+                        #firstName="ngModel"
+                        minlength="3"
+                        required
+                      />
+                      <div class="invalid-feedback" *ngIf="!firstName.valid">
+                        <div *ngIf="firstName.errors.required">
+                          نام الزامی است.
+                        </div>
+                        <div *ngIf="firstName.errors.minlength">
+                          نام باید حداقل 3 کاراکتر باشد.
+                        </div>
+                      </div>
                     </div>
                     <div class="col-6">
-                      <input type="text" class="form-control form-control-user" placeholder="نام خانوادگی"
-                        name="lastName" ngModel #lastName="ngModel">
+                      <input
+                        type="text"
+                        class="form-control form-control-user"
+                        [class.is-invalid]="lastName.touched && !lastName.valid"
+                        [class.is-valid]="lastName.touched && lastName.valid"
+                        placeholder="نام خانوادگی"
+                        name="lastName"
+                        ngModel
+                        #lastName="ngModel"
+                        minlength="3"
+                        required
+                      />
+                      <div class="invalid-feedback" *ngIf="!lastName.valid">
+                        <div *ngIf="lastName.errors.required">
+                          نام خانوادگی الزامی است.
+                        </div>
+                        <div *ngIf="lastName.errors.minlength">
+                          نام خانوادگی باید حداقل 3 کاراکتر باشد.
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" placeholder="رمز عبور" name="password"
-                      ngModel #password="ngModel">
+                    <input
+                      type="password"
+                      class="form-control form-control-user"
+                      [class.is-invalid]="password.touched && !password.valid"
+                      [class.is-valid]="password.touched && password.valid"
+                      placeholder="رمز عبور"
+                      name="password"
+                      ngModel
+                      #password="ngModel"
+                      minlength="8"
+                      required
+                    />
+                    <div class="invalid-feedback" *ngIf="!password.valid">
+                      <div *ngIf="password.errors.required">
+                        رمز عبور الزامی است.
+                      </div>
+                      <div *ngIf="password.errors.minlength">
+                        رمز عبور باید حداقل 8 کاراکتر باشد.
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" placeholder="تکرار رمز عبور"
-                      name="repeatPassword" ngModel #repeatPassword="ngModel">
+                    <input
+                      type="password"
+                      class="form-control form-control-user"
+                      [class.is-invalid]="
+                        (repeatPassword.touched && !repeatPassword.valid) ||
+                        !validRepeatPassword
+                      "
+                      [class.is-valid]="
+                        (repeatPassword.touched && repeatPassword.valid) ||
+                        !validRepeatPassword
+                      "
+                      placeholder="تکرار رمز عبور"
+                      name="repeatPassword"
+                      ngModel
+                      #repeatPassword="ngModel"
+                      required
+                    />
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="!repeatPassword.valid || !validRepeatPassword"
+                    >
+                      <div
+                        *ngIf="
+                          !repeatPassword.valid &&
+                          repeatPassword.errors.required
+                        "
+                      >
+                        تکرار رمز عبور الزامی است.
+                      </div>
+                      <div *ngIf="!validRepeatPassword">
+                        تکرار رمز با رمز عبور مطابقت ندارد.
+                      </div>
+                    </div>
                   </div>
-                  <button class="btn btn-primary btn-user btn-block" type="submit" [disabled]="!form.valid">
+                  <button
+                    class="btn btn-primary btn-user btn-block"
+                    type="submit"
+                    [disabled]="!form.valid"
+                  >
                     ثبت
                   </button>
                 </form>
-                <hr>
+                <hr />
                 <div class="text-center">
-                  <a class="small" routerLink="/login">در حال حاضر حساب کاربری دارید؟ وارد شوید</a>
+                  <a class="small" routerLink="/login"
+                    >در حال حاضر حساب کاربری دارید؟ وارد شوید</a
+                  >
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
 </div>
