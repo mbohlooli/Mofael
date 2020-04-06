@@ -7,16 +7,17 @@ import { Router } from "@angular/router";
 @Component({
   selector: "home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"]
+  styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
   schools$: Observable<School[]>;
   router: Router;
+  deleteWithoutWarning = false;
 
   columns = [
     { path: "name", label: "نام" },
     { path: "city", label: "شهر" },
-    { path: "zone", label: "منطقه" }
+    { path: "zone", label: "منطقه" },
   ];
 
   constructor(private schoolService: SchoolService, router: Router) {

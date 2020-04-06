@@ -33,7 +33,7 @@
     </thead>
     <tbody>
       <tr class="data-row" *ngFor="let item of pagedData; let i = index">
-        <td style="width: 2%">{{ (page - 1) * limit + i + 1 }}</td>
+        <td style="width: 2%;">{{ (page - 1) * limit + i + 1 }}</td>
         <td *ngFor="let column of columns">
           <ng-container
             *ngIf="getType(pick(item, column.path)) != 'object'; else obj"
@@ -115,21 +115,7 @@
         </button>
       </div>
     </div>
-    <div class="col-5">
-      <div class="float-left">
-        <div class="custom-control custom-checkbox mr-sm-2">
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            id="customControlAutosizing"
-            [(ngModel)]="deleteWithoutWarning"
-          />
-          <label class="custom-control-label" for="customControlAutosizing"
-            >حذف بدون اخطار</label
-          >
-        </div>
-      </div>
-    </div>
+    <div class="col-5"></div>
     <div class="col-2">
       <div class="float-left">
         <nav>

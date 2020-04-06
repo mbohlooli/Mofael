@@ -5,7 +5,7 @@ import * as _ from "lodash";
 @Component({
   selector: "data-table",
   templateUrl: "./data-table.component.html",
-  styleUrls: ["./data-table.component.css"]
+  styleUrls: ["./data-table.component.css"],
 })
 export class DataTableComponent implements OnInit {
   @Input("columns") columns;
@@ -16,8 +16,9 @@ export class DataTableComponent implements OnInit {
   @Input("actions") actions = {
     update: true,
     delete: true,
-    info: true
+    info: true,
   };
+  @Input("deleteWithoutWarning") deleteWithoutWarning;
 
   @Output("onDeleteItem") deleteItemEvent = new EventEmitter();
   @Output("onDeleteAll") deleteAllEvent = new EventEmitter();
@@ -29,11 +30,11 @@ export class DataTableComponent implements OnInit {
   filteredData: any[];
   pagedData: any[];
   deleteIndex;
-  deleteWithoutWarning = false;
   router: Router;
 
   constructor(router: Router) {
     //FIXME: the delete without warning must not reset when the table is reloded with new data
+    //TODO: lift the state up
     this.router = router;
   }
 
@@ -82,7 +83,7 @@ export class DataTableComponent implements OnInit {
 
   search(query: string) {
     this.filteredData = query
-      ? this.filteredData.filter(item => {
+      ? this.filteredData.filter((item) => {
           for (let column of this.columns)
             if (
               typeof item[`${column.path}`] == "string" &&
