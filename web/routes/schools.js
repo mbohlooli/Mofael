@@ -42,7 +42,7 @@ router.post("/", [auth, educationalDirector], async (req, res) => {
 
   school = new School({
     ..._.pick(req.body, ["name", "city", "zone"]),
-    managerId: manager._id
+    managerId: manager._id,
   });
 
   await school.save();
@@ -96,7 +96,7 @@ router.post("/:id", [auth, manager], async (req, res) => {
   user = new User({
     ..._.pick(req.body, ["username", "firstName", "lastName"]),
     roles,
-    schoolId: req.params.id
+    schoolId: req.params.id,
   });
 
   user.password = await generatePassword(req.body.password);
@@ -105,6 +105,23 @@ router.post("/:id", [auth, manager], async (req, res) => {
 
   const token = user.generateAuthToken();
   res.header("x-auth-token", token).send(JSON.stringify(user));
+});
+
+router.delete("/", [auth, manager], async (req, res) => {
+  const schools = await School.find({ managerId: req.user._id });
+
+  for (let school of schools) {
+    const grades = await Grade.find({ schoolId: school._id });
+
+    for (let grade of grades) {
+      await Classroom.deleteMany({ grade });
+      await grade.delete();
+    }
+
+    await school.delete();
+  }
+
+  res.send(JSON.stringify("done"));
 });
 
 module.exports = router;
