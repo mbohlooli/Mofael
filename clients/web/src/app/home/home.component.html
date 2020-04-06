@@ -178,6 +178,7 @@
             [data]="schools"
             [columns]="columns"
             [defaultPath]="'name'"
+            [updateUrl]="'/school/'"
             (onDeleteItem)="delete($event)"
             (onDeleteAll)="deleteAll($event)"
             [deleteWithoutWarning]="deleteWithoutWarning"

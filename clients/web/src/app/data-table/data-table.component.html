@@ -62,7 +62,7 @@
             *ngIf="actions.update"
             class="btn btn-primary btn-circle"
             style="margin-left: 10px;"
-            (click)="router.navigate(updateUrl)"
+            (click)="router.navigate([updateUrl + item._id])"
           >
             <i class="fas fa-pen"></i>
           </button>

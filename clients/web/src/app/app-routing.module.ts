@@ -10,11 +10,12 @@ const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent },
-  { path: "school/new", component: SchoolFormComponent }
+  { path: "school/new", component: SchoolFormComponent },
+  { path: "school/:id", component: SchoolFormComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
