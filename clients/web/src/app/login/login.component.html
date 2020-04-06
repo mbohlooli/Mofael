@@ -11,29 +11,45 @@
               <div class="p-5">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">خوش آمدید!</h1>
+                  <div
+                    style="color: #e74a3b; margin-bottom: 10px;"
+                    *ngIf="!validInfo"
+                  >
+                    نام کاربری یا رمز عبور اشتباه است.
+                  </div>
                 </div>
                 <form class="user" #form="ngForm" (submit)="submit(form.value)">
                   <div class="form-group">
                     <input
                       type="text"
-                      class="form-control form-control-user"
+                      class="form-control form-control-user is-invalid"
+                      [class.is-invalid]="username.touched && !username.valid"
+                      [class.is-valid]="username.touched && username.valid"
                       placeholder="نام کاربری"
                       name="username"
                       ngModel
                       #username="ngModel"
                       required
                     />
+                    <div class="invalid-feedback" *ngIf="!username.valid">
+                      نام کاربری الزامی است.
+                    </div>
                   </div>
                   <div class="form-group">
                     <input
                       type="password"
                       class="form-control form-control-user"
+                      [class.is-invalid]="password.touched && !password.valid"
+                      [class.is-valid]="password.touched && password.valid"
                       placeholder="رمز عبور"
                       name="password"
                       ngModel
                       #password="ngModel"
                       required
                     />
+                    <div class="invalid-feedback" *ngIf="!password.valid">
+                      رمز عبور الزامی است.
+                    </div>
                   </div>
                   <!-- TODO: make remember me functioning -->
                   <!-- <div class="form-group">

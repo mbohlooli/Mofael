@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { AuthService } from "../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  encapsulation: ViewEncapsulation.None
+  selector: "login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
+  validInfo = true;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) this.router.navigate(["/"]);
@@ -18,13 +19,15 @@ export class LoginComponent implements OnInit {
 
   submit(data) {
     //TODO: handle errors with a snack or modal or ...
-    this.authService.login(data).subscribe(token => {
-      localStorage.setItem("token", token.toString());
-      let returnUrl = localStorage.getItem("returnUrl");
+    this.authService.login(data).subscribe(
+      (token) => {
+        localStorage.setItem("token", token.toString());
+        let returnUrl = localStorage.getItem("returnUrl");
 
-      localStorage.removeItem("returnUrl");
-      this.router.navigateByUrl(returnUrl);
-    });
+        localStorage.removeItem("returnUrl");
+        this.router.navigateByUrl(returnUrl);
+      },
+      (err) => (this.validInfo = false)
+    );
   }
-
 }
