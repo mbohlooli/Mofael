@@ -31,6 +31,19 @@ router.get("/:id", [auth, manager], async (req, res) => {
   res.send(JSON.stringify(school));
 });
 
+router.get("/info/:id", [auth, manager], async (req, res) => {
+  //TODO: complete the response of this route
+  const school = await School.findById(req.params.id);
+  if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
+
+  if (!(await verifySchoolAccess(school, req)))
+    return res.status(403).send("شما اجازه دسترسی به این مدرسه را ندارید.");
+
+  const users = await User.find({ schoolId: req.params.id });
+
+  res.send(JSON.stringify({ school, count: users.length }));
+});
+
 router.get("/count/:id", [auth, educationalDirector], async (req, res) => {
   const school = await School.findById(req.params.id);
   if (!school) return res.status(404).send("مدرسه مورد نظر یافت نشد.");
