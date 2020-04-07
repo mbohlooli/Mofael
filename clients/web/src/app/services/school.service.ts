@@ -32,6 +32,15 @@ export class SchoolService {
       .pipe(map((res: School) => res));
   }
 
+  getSchoolInfo(id): Observable<{ school: School; count: number }> {
+    let headers = new HttpHeaders({
+      "x-auth-token": localStorage.getItem("token"),
+    });
+    return this.http
+      .get(this.url + "/info/" + id, { headers })
+      .pipe(map((res: { school: School; count: number }) => res));
+  }
+
   create(school: School) {
     let headers = new HttpHeaders({
       "x-auth-token": localStorage.getItem("token"),

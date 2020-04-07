@@ -5,6 +5,7 @@ import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
 import { AuthGuard } from "./services/auth-guard.service";
 import { SchoolFormComponent } from "./school-form/school-form.component";
+import { SchoolInfoComponent } from "./school-info/school-info.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "school/new", component: SchoolFormComponent },
   { path: "school/:id", component: SchoolFormComponent },
+  { path: "school/info/:id", component: SchoolInfoComponent },
 ];
 
 @NgModule({
