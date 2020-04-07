@@ -51,4 +51,8 @@ export class SchoolFormComponent implements OnInit {
       (err) => (this.schoolExisted = true)
     );
   }
+
+  getParam(name) {
+    return this.route.snapshot.paramMap.get(name);
+  }
 }
