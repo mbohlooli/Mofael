@@ -1,0 +1,35 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
+      <button
+        class="close"
+        type="button"
+        data-dismiss="modal"
+        aria-label="Close"
+      >
+        <span (click)="close.emit()" aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ng-content selector=".body"></ng-content>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="btn btn-secondary"
+        (click)="deleteIndex = -1"
+        type="button"
+        data-dismiss="modal"
+      >
+        انصراف
+      </button>
+      <button
+        class="btn btn-{{ color }}"
+        (click)="action.emit()"
+        data-dismiss="modal"
+      >
+        {{ actionName }}
+      </button>
+    </div>
+  </div>
+</div>

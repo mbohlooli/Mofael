@@ -1,15 +1,15 @@
-import { SchoolService } from "../services/school.service";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { School } from "../models/school";
 import { Router } from "@angular/router";
+import { School } from "../models/school";
+import { SchoolService } from "../services/school.service";
 
 @Component({
-  selector: "home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"],
+  selector: "school-manager",
+  templateUrl: "./school-manager.component.html",
+  styleUrls: ["./school-manager.component.css"],
 })
-export class HomeComponent implements OnInit {
+export class SchoolManagerComponent implements OnInit {
   schools$: Observable<School[]>;
   router: Router;
   deleteWithoutWarning = false;
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
       .subscribe(() => (this.schools$ = this.schoolService.index()));
   }
 
-  deleteAllSchools() {
+  deleteAll(schools) {
     this.schoolService
       .deleteAll()
       .subscribe(() => (this.schools$ = this.schoolService.index()));

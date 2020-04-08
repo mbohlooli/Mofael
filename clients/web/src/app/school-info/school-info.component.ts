@@ -18,8 +18,6 @@ export class SchoolInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.data$ = this.schoolService.getSchoolInfo(
-      this.route.snapshot.params.id
-    );
+    this.data$ = this.schoolService.info(this.route.snapshot.params.id);
   }
 }

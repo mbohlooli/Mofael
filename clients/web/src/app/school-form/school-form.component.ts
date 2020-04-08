@@ -22,7 +22,7 @@ export class SchoolFormComponent implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.params.id)
       this.schoolService
-        .getSchool(this.route.snapshot.params.id)
+        .get(this.route.snapshot.params.id)
         .subscribe((school) => {
           this.school = school;
         });

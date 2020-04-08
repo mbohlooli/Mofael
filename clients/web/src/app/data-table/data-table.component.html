@@ -1,5 +1,5 @@
 <input
-  *ngIf="filteredData.length != 0"
+  *ngIf="data.length != 0"
   type="text"
   class="form-control"
   style="margin-bottom: 15px;"
@@ -13,6 +13,7 @@
     <thead>
       <tr>
         <th></th>
+
         <th
           *ngFor="let column of columns"
           (click)="sort(column.path)"
@@ -28,17 +29,21 @@
             }}"
           ></i>
         </th>
+
         <th *ngIf="actions.update || actions.delete || actions.info"></th>
       </tr>
     </thead>
+
     <tbody>
       <tr class="data-row" *ngFor="let item of pagedData; let i = index">
         <td style="width: 2%;">{{ (page - 1) * limit + i + 1 }}</td>
+
         <td *ngFor="let column of columns">
           <ng-container
             *ngIf="getType(pick(item, column.path)) != 'object'; else obj"
             >{{ pick(item, column.path) }}
           </ng-container>
+
           <ng-template #obj>
             <span
               *ngFor="let subItem of pick(item, column.path); let j = index"
@@ -48,6 +53,7 @@
             </span>
           </ng-template>
         </td>
+
         <td *ngIf="actions.update || actions.delete || actions.info">
           <!-- REVIEW: bootstrap toast shall be useful -->
           <button
@@ -58,6 +64,7 @@
           >
             <i class="fas fa-info"></i>
           </button>
+
           <button
             *ngIf="actions.update"
             class="btn btn-primary btn-circle"
@@ -66,6 +73,7 @@
           >
             <i class="fas fa-pen"></i>
           </button>
+
           <button
             *ngIf="actions.delete"
             class="btn btn-danger btn-circle"
@@ -115,47 +123,26 @@
         </button>
       </div>
     </div>
+
     <div class="col-5"></div>
+
     <div class="col-2">
       <div class="float-left">
-        <nav>
-          <ul class="pagination">
-            <li
-              class="page-item"
-              (click)="
-                !(page * limit >= filteredData.length) ? shiftPage(1) : 0
-              "
-              [class.disabled]="page * limit >= filteredData.length"
-            >
-              <a class="page-link" aria-label="Previous" href="#">
-                <i aria-hidden="true" class="fas fa-arrow-right"></i>
-              </a>
-            </li>
-            <li
-              class="page-item"
-              *ngFor="let pageNumber of getPageNumbersArray()"
-              (click)="syncPages(pagesCount - pageNumber + 1)"
-              [class.active]="page == pagesCount - pageNumber + 1"
-            >
-              <a class="page-link" href="#">{{
-                pagesCount - pageNumber + 1
-              }}</a>
-            </li>
-            <li
-              class="page-item"
-              (click)="(page - 1) * limit != 0 ? shiftPage(-1) : 0"
-              [class.disabled]="(page - 1) * limit == 0"
-            >
-              <a class="page-link" aria-label="Next" href="#">
-                <i aria-hidden="true" class="fas fa-arrow-left"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <pagination
+          [page]="page"
+          [pagesCount]="pagesCount"
+          [pageNumbers]="getPageNumbersArray()"
+          [forwardDisabled]="page * limit >= filteredData.length"
+          [backwardDisabled]="(page - 1) * limit == 0"
+          (pageSelect)="syncPages(pagesCount - $event + 1)"
+          (forward)="!(page * limit >= filteredData.length) ? shiftPage(1) : 0"
+          (backward)="(page - 1) * limit != 0 ? shiftPage(-1) : 0"
+        ></pagination>
       </div>
     </div>
   </div>
 </ng-container>
+
 <ng-template #noData>
   <div class="card bg-info text-white shadow rtl" style="padding: 15px;">
     <div class="text-inline">
@@ -165,90 +152,32 @@
   </div>
 </ng-template>
 
-<!-- delete Modal-->
-<div
-  class="modal fade rtl"
-  id="deleteModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">اخطار</h5>
-        <button
-          class="close"
-          type="button"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span (click)="deleteIndex = -1" aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        آیا از حذف این مورد اطمینان دارید؟
-      </div>
-      <div class="modal-footer">
-        <button
-          class="btn btn-secondary"
-          (click)="deleteIndex = -1"
-          type="button"
-          data-dismiss="modal"
-        >
-          انصراف
-        </button>
-        <button class="btn btn-danger" (click)="delete()" data-dismiss="modal">
-          حذف
-        </button>
-      </div>
+<!-- delete modal -->
+<div class="modal fade rtl" id="deleteModal" role="dialog">
+  <confirmation-modal
+    title="اخطار"
+    actionName="حذف"
+    color="danger"
+    (close)="deleteIndex = -1"
+    (action)="delete()"
+  >
+    <div class="body">
+      آیا از حذف این مورد اطمینان دارید؟
     </div>
-  </div>
+  </confirmation-modal>
 </div>
 
-<!-- delete all Modal-->
-<div
-  class="modal fade rtl"
-  id="deleteAllModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">اخطار</h5>
-        <button
-          class="close"
-          type="button"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span (click)="deleteIndex = -1" aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        آیا از حذف همه موارد اطمینان دارید؟
-      </div>
-      <div class="modal-footer">
-        <button
-          class="btn btn-secondary"
-          (click)="deleteIndex = -1"
-          type="button"
-          data-dismiss="modal"
-        >
-          انصراف
-        </button>
-        <button
-          class="btn btn-danger"
-          (click)="deleteAll()"
-          data-dismiss="modal"
-        >
-          حذف
-        </button>
-      </div>
+<!-- delete All modal -->
+<div class="modal fade rtl" id="deleteAllModal" role="dialog">
+  <confirmation-modal
+    title="اخطار"
+    actionName="حذف"
+    color="danger"
+    (close)="deleteIndex = -1"
+    (action)="deleteAll()"
+  >
+    <div class="body">
+      آیا از حذف تمامی موراد اطمینان دارید؟
     </div>
-  </div>
+  </confirmation-modal>
 </div>

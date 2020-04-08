@@ -13,6 +13,10 @@ import { RegisterComponent } from './register/register.component';
 import { DataTableComponent } from './data-table/data-table.component';
 import { SchoolFormComponent } from './school-form/school-form.component';
 import { SchoolInfoComponent } from './school-info/school-info.component';
+import { SchoolManagerComponent } from './school-manager/school-manager.component';
+import { InfoCardComponent } from './info-card/info-card.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { SchoolInfoComponent } from './school-info/school-info.component';
     RegisterComponent,
     DataTableComponent,
     SchoolFormComponent,
-    SchoolInfoComponent
+    SchoolInfoComponent,
+    SchoolManagerComponent,
+    InfoCardComponent,
+    ConfirmationModalComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

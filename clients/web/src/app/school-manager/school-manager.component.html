@@ -1,0 +1,44 @@
+<div class="card shadow mb-4">
+  <div
+    class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+  >
+    <h6 class="m-0 font-weight-bold text-primary">
+      <i class="fas fa-school" style="margin-left: 10px;"></i>
+      مدارس
+    </h6>
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    <button
+      class="btn btn-success"
+      style="margin-bottom: 20px;"
+      (click)="router.navigate(['/school/new'])"
+    >
+      + ثبت مدرسه جدید
+    </button>
+    <div class="float-left" style="padding-top: 5px;">
+      <div class="custom-control custom-checkbox mr-sm-2">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="customControlAutosizing"
+          [(ngModel)]="deleteWithoutWarning"
+        />
+        <label class="custom-control-label" for="customControlAutosizing"
+          >حذف بدون اخطار</label
+        >
+      </div>
+    </div>
+    <data-table
+      *ngIf="schools$ | async as schools"
+      [data]="schools"
+      [columns]="columns"
+      [defaultPath]="'name'"
+      [updateUrl]="'/school/'"
+      [infoUrl]="'/school/info/'"
+      (onDeleteItem)="delete($event)"
+      (onDeleteAll)="deleteAll($event)"
+      [deleteWithoutWarning]="deleteWithoutWarning"
+    ></data-table>
+  </div>
+</div>

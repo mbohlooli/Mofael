@@ -68,7 +68,7 @@ export class DataTableComponent implements OnInit {
     if (this.limit >= this.filteredData.length)
       this.limit = this.filteredData.length;
     this.page = pageNumber;
-    this.pagesCount = Math.ceil(this.data.length / this.limit);
+    this.pagesCount = Math.ceil(this.filteredData.length / this.limit);
     this.paginateData();
   }
 

@@ -9,12 +9,12 @@ import * as _ from "lodash";
   providedIn: "root",
 })
 export class SchoolService {
-  url = "http://localhost:3000/schools";
+  url = "http://localhost:3000/schools/";
   headers: HttpHeaders;
 
   constructor(private http: HttpClient) {}
 
-  getSchools(): Observable<School[]> {
+  index(): Observable<School[]> {
     let headers = new HttpHeaders({
       "x-auth-token": localStorage.getItem("token"),
     });
@@ -23,21 +23,21 @@ export class SchoolService {
       .pipe(map((res: School[]) => res));
   }
 
-  getSchool(id): Observable<School> {
+  get(id): Observable<School> {
     let headers = new HttpHeaders({
       "x-auth-token": localStorage.getItem("token"),
     });
     return this.http
-      .get(this.url + "/" + id, { headers })
+      .get(this.url + id, { headers })
       .pipe(map((res: School) => res));
   }
 
-  getSchoolInfo(id): Observable<{ school: School; count: number }> {
+  info(id): Observable<{ school: School; count: number }> {
     let headers = new HttpHeaders({
       "x-auth-token": localStorage.getItem("token"),
     });
     return this.http
-      .get(this.url + "/info/" + id, { headers })
+      .get(this.url + `info/${id}`, { headers })
       .pipe(map((res: { school: School; count: number }) => res));
   }
 
@@ -53,24 +53,17 @@ export class SchoolService {
       "x-auth-token": localStorage.getItem("token"),
     });
     return this.http.put(
-      this.url + "/" + school._id,
+      this.url + school._id,
       _.pick(school, ["name", "city", "zone"]),
       { headers }
     );
-  }
-
-  getPersonelCount(id) {
-    let headers = new HttpHeaders({
-      "x-auth-token": localStorage.getItem("token"),
-    });
-    return this.http.get(this.url + "/count/" + id, { headers });
   }
 
   delete(id) {
     let headers = new HttpHeaders({
       "x-auth-token": localStorage.getItem("token"),
     });
-    return this.http.delete(this.url + "/" + id, { headers });
+    return this.http.delete(this.url + id, { headers });
   }
 
   deleteAll() {
