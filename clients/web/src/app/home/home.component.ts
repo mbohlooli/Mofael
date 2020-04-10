@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { School } from "../models/school";
 import { Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: "home",
@@ -20,7 +21,11 @@ export class HomeComponent implements OnInit {
     { path: "zone", label: "منطقه" },
   ];
 
-  constructor(private schoolService: SchoolService, router: Router) {
+  constructor(
+    private schoolService: SchoolService,
+    router: Router,
+    public authService: AuthService
+  ) {
     this.router = router;
   }
 

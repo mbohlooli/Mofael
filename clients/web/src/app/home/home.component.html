@@ -8,7 +8,10 @@
   <div class="row rtl">
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
-      <school-manager></school-manager>
+      <!-- TODO: add a ng-switch to handle more events here -->
+      <school-manager
+        *ngIf="authService.currentUser.hasPermission(2)"
+      ></school-manager>
     </div>
 
     <!-- Pie Chart -->

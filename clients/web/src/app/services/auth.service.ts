@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { User } from "../models/user";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class AuthService {
   url = "http://localhost:3000/auth/login";
@@ -27,6 +28,6 @@ export class AuthService {
     let token = localStorage.getItem("token");
     if (!token) return null;
 
-    return jwt.decodeToken(token);
+    return new User(jwt.decodeToken(token));
   }
 }

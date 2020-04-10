@@ -9,9 +9,7 @@ export class ManagerGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route, state: RouterStateSnapshot) {
-    for (let role of this.authService.currentUser.roles)
-      if (role.degree <= 2) return true;
-
+    if (this.authService.currentUser.hasPermission(2)) return true;
     this.router.navigate(["/403"]);
   }
 }
