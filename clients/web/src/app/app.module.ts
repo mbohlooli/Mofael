@@ -17,6 +17,7 @@ import { SchoolManagerComponent } from './school-manager/school-manager.componen
 import { InfoCardComponent } from './info-card/info-card.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     SchoolManagerComponent,
     InfoCardComponent,
     ConfirmationModalComponent,
-    PaginationComponent
+    PaginationComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,
