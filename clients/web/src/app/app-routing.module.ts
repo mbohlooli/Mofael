@@ -18,8 +18,16 @@ const routes: Routes = [
     component: SchoolFormComponent,
     canActivate: [AuthGuard, ManagerGuard],
   },
-  { path: "school/:id", component: SchoolFormComponent },
-  { path: "school/info/:id", component: SchoolInfoComponent },
+  {
+    path: "school/:id",
+    component: SchoolFormComponent,
+    canActivate: [AuthGuard, ManagerGuard],
+  },
+  {
+    path: "school/info/:id",
+    component: SchoolInfoComponent,
+    canActivate: [AuthGuard, ManagerGuard],
+  },
   { path: "403", component: ForbiddenComponent },
 ];
 
