@@ -8,6 +8,7 @@ import { AuthGuard } from "./services/auth-guard.service";
 import { SchoolFormComponent } from "./school-form/school-form.component";
 import { SchoolInfoComponent } from "./school-info/school-info.component";
 import { ForbiddenComponent } from "./forbidden/forbidden.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [AuthGuard] },
@@ -29,6 +30,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, ManagerGuard],
   },
   { path: "403", component: ForbiddenComponent },
+  { path: "**", component: NotFoundComponent },
 ];
 
 @NgModule({

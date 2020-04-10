@@ -18,6 +18,7 @@ import { InfoCardComponent } from './info-card/info-card.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     InfoCardComponent,
     ConfirmationModalComponent,
     PaginationComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
