@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 export class User {
   _id: string;
   username: string;
@@ -20,7 +22,8 @@ export class User {
   }
 
   public hasPermission(degree) {
-    for (let role of this.roles) if (role.degree <= degree) return true;
+    let roles = _.orderBy(this.roles, ["name"], ["asc"]);
+    for (let role of roles) if (role.degree <= degree) return true;
     return false;
   }
 
